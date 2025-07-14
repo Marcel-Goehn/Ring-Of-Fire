@@ -6,8 +6,26 @@
     height: 100dvh;
     max-width: 100%;
     @include dFlex();
+}
+
+.background-img {
+    height: 100dvh;
+}
+
+.start-label-box {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 140px;
+    @include dFlex();
 
     >img {
-        height: 100dvh;
+        width: 30%;
+        cursor: pointer;
+        transition: filter 100ms ease-in-out;
+
+        &:hover {
+            filter: brightness(1.2);
+        }
     }
 }
