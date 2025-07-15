@@ -9,7 +9,7 @@ import { Game } from 'src/models/game';
 export class GameComponent implements OnInit {
   game!: Game;
   pickCardAnimation: boolean = false;
-  currentCard: string | undefined = '';
+  currentCard: string = '';
 
 
   ngOnInit(): void {
@@ -25,12 +25,18 @@ export class GameComponent implements OnInit {
 
   takeCard(): void {
     if (!this.pickCardAnimation) {
-      this.currentCard = this.game.stack.pop();
+      let card = this.game.stack.pop();
+      if (card !== undefined) {
+        this.currentCard = card;
+      }
       this.pickCardAnimation = true;
+      console.log(this.game.playedCards);
+      console.log(this.game.stack);
 
       setTimeout(() => {
         this.pickCardAnimation = false;
-      }, 1500)
+        this.game.playedCards.push(this.currentCard);
+      }, 1000)
     }
   }
 }
