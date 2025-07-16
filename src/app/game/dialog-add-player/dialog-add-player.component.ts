@@ -6,10 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./dialog-add-player.component.scss']
 })
 export class DialogAddPlayerComponent {
-  name: string = "Hello World";
+  name: string = "";
 
 
   onNoClick() {
-    
+
   }
 }
