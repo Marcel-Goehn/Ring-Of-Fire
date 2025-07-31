@@ -16,6 +16,8 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { GameInstructionsComponent } from './game/game-instructions/game-instructions.component';
 import {MatCardModule} from '@angular/material/card';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,10 @@ import {MatCardModule} from '@angular/material/card';
     FormsModule,
     MatCardModule
   ],
-  providers: [],
+  providers: [
+    provideFirebaseApp(() => initializeApp({"projectId":"ring-of-fire-649bc","appId":"1:117962311594:web:89607dbcfeb9857d7a0dd3","storageBucket":"ring-of-fire-649bc.firebasestorage.app","apiKey":"AIzaSyBfJ1w1Vlbw97ZkVIrFNXltb1RrgobAEKI","authDomain":"ring-of-fire-649bc.firebaseapp.com","messagingSenderId":"117962311594"})),
+    provideFirestore(() => getFirestore())
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

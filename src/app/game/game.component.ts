@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Game } from 'src/models/game';
 import { DialogAddPlayerComponent } from './dialog-add-player/dialog-add-player.component';
+import { FirebaseService } from '../firebase-service/firebase.service';
 
 @Component({
   selector: 'app-game',
@@ -12,10 +13,12 @@ export class GameComponent implements OnInit {
   game!: Game;
   pickCardAnimation: boolean = false;
   currentCard: string = '';
+  logging = inject(FirebaseService);
 
   constructor(public dialog: MatDialog) {
 
   }
+
 
   ngOnInit(): void {
     this.newGame();
