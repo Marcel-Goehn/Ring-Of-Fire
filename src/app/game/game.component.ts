@@ -14,6 +14,7 @@ export class GameComponent implements OnInit {
   game!: Game;
   pickCardAnimation: boolean = false;
   currentCard: string = '';
+  gameId: string = '';
   firebaseService = inject(FirebaseService);
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog) { }
@@ -22,7 +23,8 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
     this.newGame();
     this.route.params.subscribe((param) => {
-      console.log(param);
+      this.gameId = param['id'];
+      console.log(this.gameId);
       this.firebaseService.getDocSnapShot(param['id'], (gameData) => {
         this.game.players = gameData.players;
         this.game.stack = gameData.stack;
@@ -50,6 +52,7 @@ export class GameComponent implements OnInit {
       setTimeout(() => {
         this.pickCardAnimation = false;
         this.game.playedCards.push(this.currentCard);
+        this.updateGame();
       }, 1000)
     }
   }
@@ -61,7 +64,13 @@ export class GameComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result && result.length > 0) {
         this.game.players.push(result);
+        this.updateGame();
       }
     });
+  }
+
+
+  updateGame() {
+    this.firebaseService.updateGame(this.game, this.gameId);
   }
 }

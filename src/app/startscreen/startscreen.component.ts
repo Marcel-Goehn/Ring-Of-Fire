@@ -11,6 +11,7 @@ import { Game } from 'src/models/game';
 export class StartscreenComponent {
 
   firebaseService = inject(FirebaseService);
+  gameId: string = '';
 
   constructor(private router: Router) {}
 
@@ -18,6 +19,7 @@ export class StartscreenComponent {
   async newGame() {
     const game = new Game();
     await this.firebaseService.addDocument(game.toJSON());
-    this.router.navigateByUrl(`/game/${this.firebaseService.idFromLastCreatedGame}`);
+    this.gameId = this.firebaseService.idFromLastCreatedGame;
+    this.router.navigateByUrl(`/game/${this.gameId}`);
   }
 }

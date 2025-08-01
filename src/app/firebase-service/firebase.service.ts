@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, onSnapshot, addDoc, doc } from '@angular/fire/firestore';
+import { Firestore, collection, onSnapshot, addDoc, doc, updateDoc } from '@angular/fire/firestore';
 import { Game } from 'src/models/game';
 
 @Injectable({
@@ -34,6 +34,16 @@ export class FirebaseService {
       (gameInfo) => {
         this.idFromLastCreatedGame = gameInfo.id;
       });
+  }
+
+
+  async updateGame(obj: any, docId: string) {
+    await updateDoc(this.getDocRef(docId), {
+      currentPlayer: obj.currentPlayer,
+      playedCards: obj.playedCards,
+      players: obj.players,
+      stack: obj.stack
+    })
   }
 
 
