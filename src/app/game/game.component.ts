@@ -12,8 +12,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GameComponent implements OnInit {
   game!: Game;
-  pickCardAnimation: boolean = false;
-  currentCard: string = '';
   gameId: string = '';
   firebaseService = inject(FirebaseService);
 
@@ -30,6 +28,8 @@ export class GameComponent implements OnInit {
         this.game.stack = gameData.stack;
         this.game.playedCards = gameData.playedCards;
         this.game.currentPlayer = gameData.currentPlayer;
+        this.game.pickCardAnimation = gameData.pickCardAnimation;
+        this.game.currentCard = gameData.currentCard;
       });
     })
   }
@@ -41,17 +41,18 @@ export class GameComponent implements OnInit {
 
 
   takeCard(): void {
-    if (!this.pickCardAnimation) {
+    if (!this.game.pickCardAnimation) {
       let card = this.game.stack.pop();
       if (card !== undefined) {
-        this.currentCard = card;
+        this.game.currentCard = card;
       }
-      this.pickCardAnimation = true;
+      this.game.pickCardAnimation = true;
+      this.updateGame();
       this.game.currentPlayer = (this.game.currentPlayer + 1) % this.game.players.length;
 
       setTimeout(() => {
-        this.pickCardAnimation = false;
-        this.game.playedCards.push(this.currentCard);
+        this.game.pickCardAnimation = false;
+        this.game.playedCards.push(this.game.currentCard);
         this.updateGame();
       }, 1000)
     }

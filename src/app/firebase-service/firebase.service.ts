@@ -29,7 +29,9 @@ export class FirebaseService {
       players: obj.players,
       stack: obj.stack,
       playedCards: obj.playedCards,
-      currentPlayer: obj.currentPlayer
+      currentPlayer: obj.currentPlayer,
+      pickCardAnimation: obj.pickCardAnimation,
+      currentCard: obj.currentCard
     }).then(
       (gameInfo) => {
         this.idFromLastCreatedGame = gameInfo.id;
@@ -42,7 +44,9 @@ export class FirebaseService {
       currentPlayer: obj.currentPlayer,
       playedCards: obj.playedCards,
       players: obj.players,
-      stack: obj.stack
+      stack: obj.stack,
+      pickCardAnimation: obj.pickCardAnimation,
+      currentCard: obj.currentCard
     })
   }
 
