@@ -12,6 +12,7 @@ export class FirebaseService {
   stack: string[] = [];
   playedCards: string[] = [];
   currentPlayer: number = 0;
+  idFromLastCreatedGame: string = '';
   unsubData?: () => void;
 
 
@@ -23,13 +24,16 @@ export class FirebaseService {
 }
 
 
-  async addDocument(obj: any): Promise<void> {
+  async addDocument(obj: any) {
     await addDoc(collection(this.firestore, "card"), {
       players: obj.players,
       stack: obj.stack,
       playedCards: obj.playedCards,
       currentPlayer: obj.currentPlayer
-    });
+    }).then(
+      (gameInfo) => {
+        this.idFromLastCreatedGame = gameInfo.id;
+      });
   }
 
 

@@ -35,7 +35,6 @@ export class GameComponent implements OnInit {
 
   newGame(): void {
     this.game = new Game;
-    // this.firebaseService.addDocument(this.game.toJSON());
   }
 
 
