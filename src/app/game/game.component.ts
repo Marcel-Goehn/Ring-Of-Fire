@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Game } from 'src/models/game';
 import { DialogAddPlayerComponent } from './dialog-add-player/dialog-add-player.component';
 import { FirebaseService } from '../firebase-service/firebase.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -13,21 +14,28 @@ export class GameComponent implements OnInit {
   game!: Game;
   pickCardAnimation: boolean = false;
   currentCard: string = '';
-  logging = inject(FirebaseService);
+  firebaseService = inject(FirebaseService);
 
-  constructor(public dialog: MatDialog) {
-
-  }
+  constructor(private route: ActivatedRoute, public dialog: MatDialog) { }
 
 
   ngOnInit(): void {
     this.newGame();
+    this.route.params.subscribe((param) => {
+      console.log(param);
+      this.firebaseService.getDocSnapShot(param['id'], (gameData) => {
+        this.game.players = gameData.players;
+        this.game.stack = gameData.stack;
+        this.game.playedCards = gameData.playedCards;
+        this.game.currentPlayer = gameData.currentPlayer;
+      });
+    })
   }
 
 
   newGame(): void {
     this.game = new Game;
-    console.log(this.game);
+    // this.firebaseService.addDocument(this.game.toJSON());
   }
 
 
